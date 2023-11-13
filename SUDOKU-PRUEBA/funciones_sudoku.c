@@ -35,12 +35,14 @@ int preguntar_seguir_jugando()
 
 int es_random_valido(int numero, tablero_t* tablero, int fila, int columna) 
 {
+    int es_valido = 1;  // Se asume que el número es válido
+
     // Verificar si el número NO está en la fila
     for (int i = 0; i < MAX; i++) 
     {
         if (tablero->MATRIZ[fila][i] == numero) 
         {
-            return 0;  // Número repetido en la fila
+            es_valido = 0;  // Número repetido en la fila
         }
     }
 
@@ -49,7 +51,7 @@ int es_random_valido(int numero, tablero_t* tablero, int fila, int columna)
     {
         if (tablero->MATRIZ[i][columna] == numero) 
         {
-            return 0;  // Número repetido en la columna
+            es_valido = 0;  // Número repetido en la columna
         }
     }
 
@@ -63,13 +65,14 @@ int es_random_valido(int numero, tablero_t* tablero, int fila, int columna)
         {
             if (tablero->MATRIZ[i][j] == numero) 
             {
-                return 0;  // Número repetido en el cuadrante 3x3
+                es_valido = 0;  // Número repetido en el cuadrante 3x3
             }
         }
     }
 
-    return 1;  // El número es válido
+    return es_valido;  // Devolver el resultado al final
 }
+
 
 //Se modifico INICIO TABLERO
 void inicio_tablero(tablero_t* tablero) 
@@ -123,14 +126,15 @@ void mostrar_tablero(tablero_t *tablero)
 
 int movimiento_valido(int numero, tablero_t* tablero, int fila, int columna)
 {
+    int retorno = -1;
     // Verificar si la posición ya tiene un número diferente de cero
     if (tablero->MATRIZ[fila][columna] != 0)
     {
-        return 0;  // La posición ya está ocupada
+        retorno = 0;  // La posición ya está ocupada
     }
     else if (numero < 1 || numero > 9)
     {
-        return 0;
+        retorno = 0;
     }
 
     // Verificar si el número NO está en la fila
@@ -138,7 +142,7 @@ int movimiento_valido(int numero, tablero_t* tablero, int fila, int columna)
     {
         if (i != columna && tablero->MATRIZ[fila][i] == numero)
         {
-            return 0;  // Número repetido en la fila
+            retorno = 0;  // Número repetido en la fila
         }
     }
 
@@ -147,7 +151,7 @@ int movimiento_valido(int numero, tablero_t* tablero, int fila, int columna)
     {
         if (i != fila && tablero->MATRIZ[i][columna] == numero)
         {
-            return 0;  // Número repetido en la columna
+            retorno = 0;  // Número repetido en la columna
         }
     }
 
@@ -159,30 +163,32 @@ int movimiento_valido(int numero, tablero_t* tablero, int fila, int columna)
     {
         for (int j = inicio_columna; j < inicio_columna + 3; j++)
         {
-            if (!(i == fila && j == columna) && tablero->MATRIZ[i][j] == numero)
+            if (i != fila && j != columna && tablero->MATRIZ[i][j] == numero)
             {
-                return 0;  // Número repetido en el cuadrante 3x3
+                retorno = 0;  // Número repetido en el cuadrante 3x3
             }
         }
     }
+    retorno = 1;
 
-    return 1;  // El número es válido
+    return retorno;  // El número es válido
 }
 
 int esta_completo(tablero_t* tablero)
 {
+    int retorno = 2;
     for (int i = 0; i < MAX; i++)
     {
         for (int j = 0; j < MAX; j++)
         {
             if (tablero->MATRIZ[i][j] == 0)
             {
-                return 0;  // Hay al menos una celda vacía
+                retorno = 0;  // Hay al menos una celda vacía
             }
         }
     }
-
-    return 1;  // El tablero está completo
+    retorno = 1;
+    return retorno;  // El tablero está completo
 }
 
 
@@ -193,7 +199,6 @@ void guardar_tablero(tablero_t* tablero, char* nombre_archivo)
     if (archivo == NULL)
     {
         printf("No se pudo abrir el archivo para guardar.\n");
-        return;
     }
 
     for (int i = 0; i < MAX; i++)
@@ -217,7 +222,6 @@ void cargar_tablero(tablero_t* tablero, char* nombre_archivo)
         printf("No se pudo abrir el archivo para cargar.\n");
         printf("Ya que no existe una partida previa.\n");
         salir_del_programa();
-        return;
     }
 
     for (int i = 0; i < MAX; i++)
@@ -268,5 +272,5 @@ void corrobora_opcion(int opcion, tablero_t* tablero, char* nombre_archivo)
     {
         printf("Error con la opcion ingresada\n");
         salir_del_programa();
-    }      
+    }
 }
