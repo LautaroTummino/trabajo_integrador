@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdbool.h>
+
 
 /*
 Este archivo contiene distintas funciones utilizadas en tps pasados
@@ -33,14 +33,14 @@ int preguntar_seguir_jugando()
 }
 
 
-bool es_random_valido(int numero, tablero_t* tablero, int fila, int columna) 
+int es_random_valido(int numero, tablero_t* tablero, int fila, int columna) 
 {
     // Verificar si el número NO está en la fila
     for (int i = 0; i < MAX; i++) 
     {
         if (tablero->MATRIZ[fila][i] == numero) 
         {
-            return false;  // Número repetido en la fila
+            return 0;  // Número repetido en la fila
         }
     }
 
@@ -49,7 +49,7 @@ bool es_random_valido(int numero, tablero_t* tablero, int fila, int columna)
     {
         if (tablero->MATRIZ[i][columna] == numero) 
         {
-            return false;  // Número repetido en la columna
+            return 0;  // Número repetido en la columna
         }
     }
 
@@ -63,20 +63,19 @@ bool es_random_valido(int numero, tablero_t* tablero, int fila, int columna)
         {
             if (tablero->MATRIZ[i][j] == numero) 
             {
-                return false;  // Número repetido en el cuadrante 3x3
+                return 0;  // Número repetido en el cuadrante 3x3
             }
         }
     }
 
-    return true;  // El número es válido
+    return 1;  // El número es válido
 }
-
 
 //Se modifico INICIO TABLERO
 void inicio_tablero(tablero_t* tablero) 
 {
     srand(time(NULL));
-    int numeros_restantes = 20;  // Cambia este valor al número deseado
+    int numeros_restantes = 58;  // Cambia este valor al número deseado
 
     for (int i = 0; i < MAX; i++) 
     {
@@ -160,7 +159,7 @@ int movimiento_valido(int numero, tablero_t* tablero, int fila, int columna)
     {
         for (int j = inicio_columna; j < inicio_columna + 3; j++)
         {
-            if (i != fila && j != columna && tablero->MATRIZ[i][j] == numero)
+            if (!(i == fila && j == columna) && tablero->MATRIZ[i][j] == numero)
             {
                 return 0;  // Número repetido en el cuadrante 3x3
             }
