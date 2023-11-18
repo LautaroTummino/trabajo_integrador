@@ -176,18 +176,19 @@ void mostrar_tablero(tablero_t *tablero)
 
 int esta_completo(tablero_t* tablero)
 {
+    int completo = 1;
     for (int i = 0; i < MAX; i++)
     {
         for (int j = 0; j < MAX; j++)
         {
             if (tablero->MATRIZ[i][j] == 0)
             {
-                return 0;  // Hay al menos una celda vacía
+                completo = 0;  // Hay al menos una celda vacía
             }
         }
     }
 
-    return 1;  // El tablero está completo
+    return completo;  // El tablero está completo
 }
 
 
@@ -289,7 +290,14 @@ void corrobora_opcion(int opcion, tablero_t* tablero, char* nombre_archivo)
     else if(opcion == 2)
     {
         cargar_tablero(tablero, nombre_archivo);
-        jugar_sudoku(tablero, nombre_archivo);
+        if(esta_completo(tablero))
+        {
+            printf("La ultima partida guardada fue completada\n");
+        }
+        else
+        {
+            jugar_sudoku(tablero, nombre_archivo);
+        }
     }
     else if (opcion == 3)
     {
