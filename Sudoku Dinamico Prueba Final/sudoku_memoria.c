@@ -1,13 +1,19 @@
 #include<stdio.h>
 #include <stdlib.h>
-
-
 #include "funciones_memoria.c"
-
 #define MAX 9
 
 
-
+/**
+ * Esta funcion bla bla
+ *
+ * @param tablero
+ * @param nombre_archivo
+ * @return
+ * 
+ * @pre
+ * @post
+ */
 void jugar_sudoku(tablero_t* tablero, char* nombre_archivo)
 {
     int cuenta_movimientos = 1;
@@ -74,20 +80,13 @@ int main()
     int opcion;
     char nombre_archivo[] = "sudoku_guardado.txt";
     tablero_t sudoku;
-    
     inicializar_tablero(&sudoku);
-
     logo_sudoku();
-
     menu_bienvenida();
-    
     printf("Ingrese su opcion: ");
     scanf("%d", &opcion);
-
     corrobora_opcion(opcion, &sudoku, nombre_archivo);
-
     liberar_tablero(&sudoku);
-
     return 0;
 }
 
