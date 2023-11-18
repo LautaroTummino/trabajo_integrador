@@ -5,14 +5,16 @@
 
 
 /**
- * Esta funcion bla bla
+ * Esta funcion es donde transcurre todo el codigo para poder jugar al Sudoku.
  *
- * @param tablero
- * @param nombre_archivo
+ * @param tablero Puntero al tablero de Sudoku.
+ * @param nombre_archivo Nombre del archivo para guardar la partida.
  * @return
- * 
- * @pre
- * @post
+ *
+ * La función permite al usuario jugar al Sudoku, ingresando filas, columnas y numeros.
+ * Verifica la validez de los movimientos con la función `movimiento_valido`, para luego proceder a guardar la partida/tablero en un archivo txt,
+ * pregunta al usuario si desea seguir jugando despues de cada movimiento.
+ * El juego continúa hasta que se completa el tablero o el usuario decide salir.
  */
 void jugar_sudoku(tablero_t* tablero, char* nombre_archivo)
 {
@@ -72,7 +74,6 @@ void jugar_sudoku(tablero_t* tablero, char* nombre_archivo)
     liberar_tablero(tablero);
     
 }
-
 
 
 int main() 
