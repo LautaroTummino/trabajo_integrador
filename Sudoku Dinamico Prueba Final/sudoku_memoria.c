@@ -5,7 +5,7 @@
 
 
 /**
- * Esta funcion es donde transcurre todo el codigo para poder jugar al Sudoku.
+ * En esta funcion es donde transcurre todo el codigo para poder jugar al Sudoku.
  *
  * @param tablero Puntero al tablero de Sudoku.
  * @param nombre_archivo Nombre del archivo para guardar la partida.
