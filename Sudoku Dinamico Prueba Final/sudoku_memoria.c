@@ -29,7 +29,7 @@ void jugar_sudoku(tablero_t* tablero, char* nombre_archivo)
         columna = obtener_entrada_valida(mensaje_columna);
         numero = obtener_entrada_valida(mensaje_numero);
 
-        // Validar movimiento utiliz1ando la nueva función
+        // Validar movimiento utilizando la nueva función
         if (movimiento_valido(tablero, fila, columna, numero))
         {
             // Actualizar el tablero
@@ -44,18 +44,18 @@ void jugar_sudoku(tablero_t* tablero, char* nombre_archivo)
             seguir_jugando = preguntar_seguir_jugando();
             if (!seguir_jugando)
             {
-                salir_del_programa(tablero);
+                salir_del_programa();
             }
         }
         else
         {
-            printf("Movimiento no válido. Por favor, ingresa valores válidos.\n");
+            printf("Movimiento no valido. Por favor, ingresa valores validos.\n");
 
             // Preguntar si quiere seguir jugando después de un movimiento incorrecto
             seguir_jugando = preguntar_seguir_jugando();
             if (!seguir_jugando)
             {
-                salir_del_programa(tablero);
+                salir_del_programa();
             }
 
         }
@@ -64,6 +64,8 @@ void jugar_sudoku(tablero_t* tablero, char* nombre_archivo)
 
     //Mensaje Final
     printf("Felicitaciones completaste el Sudoku de Commit & Conquer en %d movimientos.\n", cuenta_movimientos);
+    liberar_tablero(tablero);
+    
 }
 
 

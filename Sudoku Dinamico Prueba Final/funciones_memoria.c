@@ -30,7 +30,7 @@ int esta_completo(tablero_t* tablero);
 void guardar_tablero(tablero_t* tablero, char* nombre_archivo);
 void cargar_tablero(tablero_t* tablero, char* nombre_archivo);
 void menu_bienvenida();
-void salir_del_programa(tablero_t* tablero);
+void salir_del_programa();
 void logo_sudoku();
 
 
@@ -40,7 +40,6 @@ void logo_sudoku();
 int movimiento_valido(tablero_t* tablero, int fila, int columna, int numero) 
 {
     int es_movimiento_valido = 1;
-
     // Verificar límites de fila y columna
     if (fila < 1 || fila > MAX || columna < 1 || columna > MAX)
     {
@@ -53,12 +52,11 @@ int movimiento_valido(tablero_t* tablero, int fila, int columna, int numero)
         es_movimiento_valido = 0;  // Movimiento no válido, la celda ya está ocupada
     }
 
-    // Verificar si el número es válido según la matriz de juego
-    if (numero < 1 || numero > 9)
+    // Verificar si el número es válido según el tablero completo
+    if (tablero->TABLERO_COMPLETO[fila - 1][columna - 1] != numero)
     {
-        es_movimiento_valido = 0;  // Movimiento no válido, el número no está en el rango permitido
+        es_movimiento_valido = 0;  // Movimiento no válido, el número no coincide con el tablero completo
     }
-
     return es_movimiento_valido;  // Movimiento válido
 }
 
@@ -241,6 +239,27 @@ void cargar_tablero(tablero_t* tablero, char* nombre_archivo)
         }
     }
 
+    //Guardo el tablero ya que si cargo la partida algo deja de funcionar
+    int tablero_completo[MAX][MAX] =
+    {
+        {3, 5, 7, 1, 9, 4, 6, 8, 2},
+        {9, 6, 8, 3, 7, 2, 1, 4, 5},
+        {1, 4, 2, 5, 6, 8, 9, 7, 3},
+        {2, 1, 4, 7, 3, 5, 8, 6, 9},
+        {5, 3, 9, 4, 8, 6, 7, 2, 1},
+        {7, 8, 6, 9, 2, 1, 5, 3, 4},
+        {4, 7, 3, 8, 5, 9, 2, 1, 6},
+        {8, 2, 5, 6, 1, 3, 4, 9, 7},
+        {6, 9, 1, 2, 4, 7, 3, 5, 8}
+    };
+
+    for (int i = 0; i < MAX; i++)
+    {
+        for (int j = 0; j < MAX; j++)
+        {
+            tablero->TABLERO_COMPLETO[i][j] = tablero_completo[i][j];
+        }
+    }
 
     fclose(archivo);
 }
@@ -255,10 +274,9 @@ void menu_bienvenida()
     printf("|3) Salir|\n");
 }
 
-void salir_del_programa(tablero_t* tablero)
+void salir_del_programa()
 {
     printf("Gracias por jugar. Hasta luego.\n");
-    liberar_tablero(tablero);
     exit(0);
 }
 
